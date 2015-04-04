@@ -12,7 +12,6 @@ WORKDIR $HOME
 RUN echo -e "\n\n\n\nlogin.miptcloud.com\n\n" | openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mycert.pem -out mycert.pem
 RUN source /opt/rh/python27/enable &&\
   ipython profile create default &&\
-  python -c "from IPython.lib import passwd; print passwd('lambda03')"  > /root/.ipython/profile_default/nbpasswd.txt &&\
 \
   echo -e "# Notebook config\nc.NotebookApp.certfile = u'/root/mycert.pem'\nc.NotebookApp.ip = '*'\nc.NotebookApp.open_browser = False\n# It is a good idea to put it on a known, fixed port\nc.NotebookApp.port = 8000\n\nPWDFILE='/root/.ipython/profile_default/nbpasswd.txt'\nc.NotebookApp.password = open(PWDFILE).read().strip()" >> /root/.ipython/profile_default/ipython_notebook_config.py && \
 \
@@ -20,4 +19,5 @@ RUN source /opt/rh/python27/enable &&\
 \
   wget https://github.com/mathjax/MathJax/archive/v2.0-latest.zip &&\
   python -m IPython.external.mathjax v2.0-latest.zip &&\
-  rm v2.0-latest.zip
+  rm v2.0-latest.zip && \
+  python -c "from IPython.lib import passwd; print passwd('ispark')"  > /root/.ipython/profile_default/nbpasswd.txt
