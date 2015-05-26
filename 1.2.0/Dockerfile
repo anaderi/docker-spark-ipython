@@ -1,5 +1,5 @@
-FROM sequenceiq/spark:1.3.0
-RUN yum install -y python-setuptools.noarch gcc-c++.x86_64 python-devel freetype-devel libpng-devel lapack-devel wget git
+FROM sequenceiq/spark:1.2.0
+RUN yum install -y python-setuptools.noarch gcc-c++.x86_64 python-devel freetype-devel libpng-devel lapack-devel wget git emacs-nox
 RUN wget -qO- http://people.redhat.com/bkabrda/scl_python27.repo >> /etc/yum.repos.d/scl.repo
 RUN yum install -y python27
 RUN source /opt/rh/python27/enable &&\
@@ -21,3 +21,5 @@ RUN source /opt/rh/python27/enable &&\
   python -m IPython.external.mathjax v2.0-latest.zip &&\
   rm v2.0-latest.zip && \
   python -c "from IPython.lib import passwd; print passwd('ispark')"  > /root/.ipython/profile_default/nbpasswd.txt
+
+COPY bootstrap.sh /etc/bootstrap.sh

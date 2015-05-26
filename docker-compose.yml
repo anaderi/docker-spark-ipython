@@ -1,0 +1,16 @@
+#cassandra:
+#  image: spotify/cassandra
+pyspark:
+  image: anaderi/docker-spark-ipython:latest
+#  links:
+#    - cassandra
+  volumes:
+    - /data/spark-vm/notebook:/root/notebook
+    - ./etc:/etc_ext
+  ports:
+    - "0.0.0.0:8000:8000"
+  hostname: sandbox
+  environment:
+    - PASSWD=ispark
+  #command: source /opt/rh/python27/enable && ipython notebook --ip 0.0.0.0 --port 8000 notebook
+  command: ipython notebook --ip 0.0.0.0 --port 8000 notebook
