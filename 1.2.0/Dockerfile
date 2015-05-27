@@ -23,3 +23,9 @@ RUN source /opt/rh/python27/enable &&\
   python -c "from IPython.lib import passwd; print passwd('ispark')"  > /root/.ipython/profile_default/nbpasswd.txt
 
 COPY bootstrap.sh /etc/bootstrap.sh
+RUN wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz && \
+	tar xzf sbt-0.13.8.tgz && \
+	mv sbt /opt && \
+	rm sbt-0.13.8.tgz
+
+ENV PATH $PATH:/opt/sbt/bin
