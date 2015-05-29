@@ -8,8 +8,10 @@ RUN source /opt/rh/python27/enable &&\
   pip2.7 install ipython[all]
 
 ENV HOME /root
+ENV PASSWD spark
+ENV HOSTNAME login.miptcloud.com
 WORKDIR $HOME
-RUN echo -e "\n\n\n\nlogin.miptcloud.com\n\n" | openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mycert.pem -out mycert.pem
+RUN echo -e "\n\n\n\n$HOSTNAME\n\n" | openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mycert.pem -out mycert.pem
 RUN source /opt/rh/python27/enable &&\
   ipython profile create default &&\
 \
@@ -20,12 +22,13 @@ RUN source /opt/rh/python27/enable &&\
   wget https://github.com/mathjax/MathJax/archive/v2.0-latest.zip &&\
   python -m IPython.external.mathjax v2.0-latest.zip &&\
   rm v2.0-latest.zip && \
-  python -c "from IPython.lib import passwd; print passwd('ispark')"  > /root/.ipython/profile_default/nbpasswd.txt
+  python -c "from IPython.lib import passwd; print passwd('$PASSWD')"  > /root/.ipython/profile_default/nbpasswd.txt
 
 COPY bootstrap.sh /etc/bootstrap.sh
-RUN wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz && \
-	tar xzf sbt-0.13.8.tgz && \
-	mv sbt /opt && \
-	rm sbt-0.13.8.tgz
+RUN wget https://dl.bintray.com/sbt/native-packages/sbt/0.13.8/sbt-0.13.8.tgz &&\
+	tar xzf sbt-0.13.8.tgz &&\
+	mv sbt /opt &&\
+	rm sbt-0.13.8.tgz &&\
+        /opt/sbt/bin/sbt help
 
 ENV PATH $PATH:/opt/sbt/bin
