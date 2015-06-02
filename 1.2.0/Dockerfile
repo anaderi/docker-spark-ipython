@@ -9,9 +9,9 @@ RUN source /opt/rh/python27/enable &&\
 
 ENV HOME /root
 ENV PASSWD spark
-ENV HOSTNAME login.miptcloud.com
+ENV CERTHOSTNAME login.miptcloud.com
 WORKDIR $HOME
-RUN echo -e "\n\n\n\n$HOSTNAME\n\n" | openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mycert.pem -out mycert.pem
+RUN echo -e "\n\n\n\n$CERTHOSTNAME\n\n" | openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout mycert.pem -out mycert.pem
 RUN source /opt/rh/python27/enable &&\
   ipython profile create default &&\
 \
